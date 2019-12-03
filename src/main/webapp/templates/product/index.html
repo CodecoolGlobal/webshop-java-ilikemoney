@@ -35,8 +35,16 @@
 </div>
 
 <div class="container">
-    <div class="card">
-        <strong th:text="${category.name}">Category Title</strong>
+    <div class="filter-bar">
+        <select>
+            <option>none</option>
+            <option th:each="category, iterStat : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+        </select>
+        <select>
+            <option>none</option>
+            <option th:each="supplier, iterStat : ${suppliers}" th:value="${supplier.id}" th:text="${supplier.name}"></option>
+        </select>
+        <button>Filter</button>
     </div>
 
     <div id="products" class="row">
