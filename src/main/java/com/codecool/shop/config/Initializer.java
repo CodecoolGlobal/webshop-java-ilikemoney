@@ -24,10 +24,6 @@ public class Initializer implements ServletContextListener {
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
 
         //setting up a new supplier
-        Supplier amazon = new Supplier("Amazon", "Digital content and services");
-        supplierDataStore.add(amazon);
-        Supplier lenovo = new Supplier("Lenovo", "Computers");
-        supplierDataStore.add(lenovo);
         Supplier tronley = new Supplier("Doctor Jonathan Tronley", "Miracle products");
         supplierDataStore.add(tronley);
         Supplier wizardly = new Supplier("Mr. Wizardly", "Lazily put together magic items");
@@ -36,8 +32,6 @@ public class Initializer implements ServletContextListener {
         supplierDataStore.add(blibdoolpoolp);
 
         //setting up a new product category
-        ProductCategory tablet = new ProductCategory("Tablet", "Hardware", "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display.");
-        productCategoryDataStore.add(tablet);
         ProductCategory potion = new ProductCategory("Potion", "Liquid", "Bottles containing fluids of magical property");
         productCategoryDataStore.add(potion);
         ProductCategory scroll = new ProductCategory("Scroll", "Spellware", "Spells scribed to scrolls");
@@ -55,9 +49,6 @@ public class Initializer implements ServletContextListener {
 
 
         //setting up products and printing it
-        productDataStore.add(new Product("Amazon Fire", 49.9f, "USD", "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", tablet, amazon));
-        productDataStore.add(new Product("Lenovo IdeaPad Miix 700", 479, "USD", "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", tablet, lenovo));
-        productDataStore.add(new Product("Amazon Fire HD 8", 89, "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", tablet, amazon));
         productDataStore.add(new Product("Sock of Water Walking", 62.5f, "NOK", "you can walk on water but gets terribly wet and uncomfortable", clothing, wizardly));
         productDataStore.add(new Product("Boots of Reverse Flying", 124.5f, "NOK", "You will feel upside down floating on the surface", clothing, wizardly));
         productDataStore.add(new Product("Not water", 0, "SOS","Look, smells and tastes like water, but you know it's not water, neither us nor the cosmos know where it comes from", other, blibdoolpoolp));
