@@ -34,12 +34,8 @@ public class CartController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ShoppingCartDao shoppingCart = ShoppingCartDaoMem.getInstance();
-        ProductDao productDao = ProductDaoMem.getInstance();
         int productId = Integer.parseInt(req.getParameter("productId"));
-        Product product = productDao.find(productId);
-        shoppingCart.add(product);
-        System.out.println(shoppingCart.getAll());
-        req.getHeader("referer");
+        shoppingCart.add(productId);
         resp.sendRedirect(resp.encodeRedirectURL("/"));
     }
 }
