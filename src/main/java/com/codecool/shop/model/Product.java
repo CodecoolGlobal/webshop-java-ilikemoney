@@ -37,6 +37,10 @@ public class Product extends BaseModel {
         return String.valueOf(this.defaultPrice) + " " + this.defaultCurrency.toString();
     }
 
+    public String getSubTotalPrice(Integer quantity) {
+        return String.valueOf(this.defaultPrice * quantity) + " " + this.defaultCurrency.toString();
+    }
+
     public void setPrice(float price, String currency) {
         this.defaultPrice = price;
         this.defaultCurrency = Currency.getInstance(currency);
