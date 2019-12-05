@@ -5,7 +5,7 @@
     <meta name="author" content="Codecool" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-    <title>Codecool Shop</title>
+    <title>Magic Shop</title>
 
     <!-- Bootstrap components -->
     <!-- Latest compiled and minified Jquery -->
@@ -26,31 +26,36 @@
     <!-- End of Bootstrap components -->
 
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+
+    <script type="module" src="static/js/main.js"></script>
 </head>
 
 <body>
 
-<div class="jumbotron text-center">
-    <h1>Codecool Shop</h1>
+<div class="jumbotron">
+    <h1>Magic Shop</h1>
 </div>
 
 <div class="container">
     <div class="filter-bar">
-        <select>
-            <option>none</option>
-            <option th:each="category, iterStat : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+        <select id="category-selector" class="custom-select">
+            <option value="All">none</option>
+            <option th:each="category, iterStat : ${categories}" th:value="${category.getId()}" th:text="${category.getName()}"></option>
         </select>
-        <select>
-            <option>none</option>
-            <option th:each="supplier, iterStat : ${suppliers}" th:value="${supplier.id}" th:text="${supplier.name}"></option>
+        <select id="supplier-selector" class="custom-select">
+            <option value="All">none</option>
+            <option th:each="supplier, iterStat : ${suppliers}" th:value="${supplier.getId()}" th:text="${supplier.getName()}"></option>
         </select>
-        <button>Filter</button>
+        <button id="filterBtn" class="filter-button">Filter</button>
     </div>
 
     <div id="products" class="row">
-        <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${products}">
+        <div class="col col-sm-12 col-md-6 col-lg-4 product"
+             th:each="prod,iterStat : ${products}"
+             th:attr="data-supplier=${prod.supplier.getId()},
+             data-category=${prod.productCategory.getId()}">
             <div class="card">
-                <img class="" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${prod.id} + '.jpg'" alt="" />
+                <img class="" style="max-width: 400px; max-height: 250px" th:attr="src='/static/img/product_' + ${prod.getId()} + '.jpg'" alt="" />
                 <div class="card-header">
                     <h4 class="card-title" th:text="${prod.name}">Product name</h4>
                     <p class="card-text" th:text="${prod.description}">Product description... </p>
