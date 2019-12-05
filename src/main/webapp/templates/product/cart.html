@@ -31,14 +31,13 @@
 </head>
 <body>
 
-<div class="jumbotron text-center">
+<div class="jumbotron">
     <a href="/"><h1>Magic Shop</h1></a>
 </div>
 
-<div id="products" class="row">
-    <div class="col col-sm-12 col-md-6 col-lg-4" th:each="item,iterStat : ${cartItems}">
+<div id="products" th:each="item,iterStat : ${cartItems}">
         <div class="card">
-            <div class="card-header">
+            <div class="card-body">
                 <h4 class="card-title" th:text="${item.getKey().getName()}">Product name</h4>
                 <label for="quantity">Quantity:</label>
                 <input type="number" id="quantity" th:value="${cartItems.get(item.getKey())}">
@@ -46,15 +45,16 @@
             </div>
 
         </div>
-    </div>
 </div>
-<div class="card-body">
-    <div class="card-text">
-<!--        #aggregates.sum(cartItems.values()) - gives back the sum of items :D-->
-        <p class="lead" th:text="${#aggregates.sum(cartItems.values())}">100 USD</p>
-    </div>
-    <div class="card-text">
-        <a class="btn btn-success" href="#">Buy</a>
+<div class="card">
+    <div class="card-body">
+        <div class="card-text">
+    <!--        #aggregates.sum(cartItems.values()) - gives back the sum of items :D-->
+            <p class="lead" th:text="${totalPrice}">100 USD</p><span>HUF</span>
+        </div>
+        <div class="card-text">
+            <a class="btn btn-success" href="#">Buy</a>
+        </div>
     </div>
 </div>
 

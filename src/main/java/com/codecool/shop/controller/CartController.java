@@ -38,8 +38,30 @@ public class CartController extends HttpServlet {
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
         context.setVariable("cartItems", cartItems);
+        context.setVariable("totalPrice", getTotalPrice(cartItems));
 
         engine.process("product/cart.html", context, resp.getWriter());
+    }
+
+    private int getTotalPrice(Map<Product, Integer> cartItems) {
+        int totalPrice = 0;
+        for (Map.Entry<Product,Integer> entry : cartItems.entrySet()){
+            switch (entry.getKey().getDefaultCurrency().toString()){
+                case "HUF":{
+                    totalPrice+=entry.getKey().getDefaultPrice();
+                    break;
+                }
+                case "NOK":{
+                    totalPrice+=entry.getKey().getDefaultPrice()*10;
+                    break;
+                }
+                case "SOS":{
+                    totalPrice+=entry.getKey().getDefaultPrice()*100;
+                    break;
+                }
+            }
+        }
+        return totalPrice;
     }
 
     @Override
