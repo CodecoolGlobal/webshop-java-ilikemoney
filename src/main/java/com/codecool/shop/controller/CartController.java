@@ -16,17 +16,28 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @WebServlet(urlPatterns = {"/cart"})
 public class CartController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ShoppingCartDao shoppingCart = new ShoppingCartDaoMem();
+        ProductDao productDao = ProductDaoMem.getInstance();
+
+        Map<Integer, Integer> shoppingCart = ShoppingCartDaoMem.getInstance().getAll();
+        Map<Product, Integer> cartItems = new HashMap<>();
+
+        for(Map.Entry<Integer, Integer> entry : shoppingCart.entrySet()) {
+            cartItems.put(productDao.find(entry.getKey()), entry.getValue());
+        }
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
-        context.setVariable("cartItems", shoppingCart.getAll());
+        context.setVariable("cartItems", cartItems);
 
         engine.process("product/cart.html", context, resp.getWriter());
     }
