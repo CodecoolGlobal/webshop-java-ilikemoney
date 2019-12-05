@@ -1,11 +1,9 @@
 package com.codecool.shop.dao;
 
-import com.codecool.shop.model.Product;
-
 import java.util.HashMap;
 
 public interface ShoppingCartDao {
-    void add(Product product);
+    void add(int productId);
 
-    HashMap<Product, Integer> getAll();
+    HashMap<Integer, Integer> getAll();
 }
