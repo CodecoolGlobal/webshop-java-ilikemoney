@@ -38,15 +38,15 @@
 
 <div class="container">
     <div class="filter-bar">
-        <select id="category-selector">
+        <select id="category-selector" class="custom-select">
             <option value="All">none</option>
             <option th:each="category, iterStat : ${categories}" th:value="${category.getId()}" th:text="${category.getName()}"></option>
         </select>
-        <select id="supplier-selector">
+        <select id="supplier-selector" class="custom-select">
             <option value="All">none</option>
             <option th:each="supplier, iterStat : ${suppliers}" th:value="${supplier.getId()}" th:text="${supplier.getName()}"></option>
         </select>
-        <button id="filterBtn">Filter</button>
+        <button id="filterBtn" class="filter-button">Filter</button>
     </div>
 
     <div id="products" class="row">
