@@ -1,12 +1,14 @@
 package com.codecool.shop.controller;
 
+import com.codecool.shop.config.Initializer;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
+import com.codecool.shop.dao.database.ProductCategoryDaoJdbc;
+import com.codecool.shop.dao.database.ProductDaoJdbc;
+import com.codecool.shop.dao.database.SupplierDaoJdbc;
 import com.codecool.shop.config.TemplateEngineUtil;
-import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import org.postgresql.ds.PGSimpleDataSource;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -15,24 +17,39 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
 
+    DataSource dataSource = Initializer.connect();
+
+    public ProductController() throws SQLException {
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
+
+        ProductCategoryDao productCategoryDao = null;
+        ProductDao productDao = null;
+        SupplierDao supplierDao = null;
+        try {
+            productDao = new ProductDaoJdbc(dataSource);
+            productCategoryDao = new ProductCategoryDaoJdbc(dataSource);
+            supplierDao = new SupplierDaoJdbc(dataSource);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
-        context.setVariable("categories", productCategoryDataStore.getAll());
-        context.setVariable("suppliers", supplierDataStore.getAll());
-        context.setVariable("products", productDataStore.getAll());
+        context.setVariable("categories", productCategoryDao.getAll());
+        context.setVariable("suppliers", supplierDao.getAll());
+        context.setVariable("products", productDao.getAll());
         // // Alternative setting of the template context
         // Map<String, Object> params = new HashMap<>();
         // params.put("category", productCategoryDataStore.find(1));

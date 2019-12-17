@@ -4,9 +4,9 @@ import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.ShoppingCartDao;
 import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
-import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.dao.database.ProductCategoryDaoJdbc;
+import com.codecool.shop.dao.database.ProductDaoJdbc;
+import com.codecool.shop.dao.database.SupplierDaoJdbc;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
@@ -19,30 +19,29 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 
 @WebListener
-public class Initializer implements ServletContextListener {
+public class Initializer implements ServletContextListener{
 
-    DataSource dataSource = connect();
-    ProductDao productDao = new ProductDaoJDBC(dataSource);
-    ProductCategoryDao productCategoryDao = new productCategoryDaoJDBC(dataSource);
-    ShoppingCartDao shoppingCartDao = new shoppingCartDaoJDBC(dataSource);
-    SupplierDao supplierDao = new supplierDaoJDBC(dataSource);
+    @Override
+    public void contextInitialized(ServletContextEvent sce) {
 
-    public Initializer() throws SQLException {
     }
 
-    private DataSource connect() throws SQLException {
+    @Override
+    public void contextDestroyed(ServletContextEvent sce) {
+
+    }
+
+    public static DataSource connect() throws SQLException {
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
 
         dataSource.setDatabaseName("codecoolshop");
-        dataSource.setUser("kati");
-        dataSource.setPassword("andmebaas");
+        dataSource.setUser("gergo");
+        dataSource.setPassword("codecool");
 
         dataSource.getConnection().close();
 
         return dataSource;
     }
-
-
 
 
 //        ProductDao productDataStore = ProductDaoMem.getInstance();
