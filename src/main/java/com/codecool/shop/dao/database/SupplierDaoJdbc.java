@@ -20,6 +20,14 @@ public class SupplierDaoJdbc implements SupplierDao {
         this.connection = dataSource.getConnection();
     }
 
+    private Supplier getSupplier(ResultSet resultSet, int id) throws SQLException {
+        String name = resultSet.getString("name");
+        String description = resultSet.getString("description");
+        Supplier supplier = new Supplier(name, description);
+        supplier.setId(id);
+        return supplier;
+    }
+
 //    @Override
 //    public void add(Supplier supplier) {
 //
@@ -32,9 +40,7 @@ public class SupplierDaoJdbc implements SupplierDao {
         preparedStatement.setInt(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {
-            String name = resultSet.getString("name");
-            String description = resultSet.getString("description");
-            Supplier supplier = new Supplier(name, description);
+            Supplier supplier = getSupplier(resultSet, id);
             return supplier;
         } else {
             return null;
@@ -54,11 +60,8 @@ public class SupplierDaoJdbc implements SupplierDao {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(SQL);
             while (resultSet.next()) {
-                Integer id = resultSet.getInt("id");
-                String name = resultSet.getString("name");
-                String description = resultSet.getString("description");
-                Supplier supplier = new Supplier(name, description);
-                supplier.setId(id);
+                int id = resultSet.getInt("id");
+                Supplier supplier = getSupplier(resultSet, id);
                 suppliers.add(supplier);
             }
         } catch (SQLException e) {

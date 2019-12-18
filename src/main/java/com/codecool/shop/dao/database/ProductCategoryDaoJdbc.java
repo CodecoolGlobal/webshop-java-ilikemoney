@@ -20,6 +20,15 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
         this.connection = dataSource.getConnection();
     }
 
+    private ProductCategory getProductCategory(ResultSet resultSet, int id) throws SQLException {
+        String name = resultSet.getString("name");
+        String department = resultSet.getString("department");
+        String description = resultSet.getString("description");
+        ProductCategory productCategory = new ProductCategory(name, department, description);
+        productCategory.setId(id);
+        return productCategory;
+    }
+
 //    @Override
 //    public void add(ProductCategory category) {
 //
@@ -32,10 +41,7 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
         preparedStatement.setInt(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {
-            String name = resultSet.getString("name");
-            String department = resultSet.getString("department");
-            String description = resultSet.getString("description");
-            ProductCategory productCategory = new ProductCategory(name, department, description);
+            ProductCategory productCategory = getProductCategory(resultSet, id);
             return productCategory;
         } else {
             return null;
@@ -55,12 +61,8 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(SQL);
             while (resultSet.next()) {
-                Integer id = resultSet.getInt("id");
-                String name = resultSet.getString("name");
-                String department = resultSet.getString("department");
-                String description = resultSet.getString("description");
-                ProductCategory productCategory = new ProductCategory(name, department, description);
-                productCategory.setId(id);
+                int id = resultSet.getInt("id");
+                ProductCategory productCategory = getProductCategory(resultSet, id);
                 productCategories.add(productCategory);
             }
         } catch (SQLException e) {

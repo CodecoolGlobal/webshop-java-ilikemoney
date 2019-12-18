@@ -6,10 +6,7 @@ import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,14 +21,37 @@ public class ProductDaoJdbc implements ProductDao {
         this.connection = dataSource.getConnection();
     }
 
+    private Product getProduct(ResultSet resultSet, int id) throws SQLException {
+        String name = resultSet.getString("name");
+        float defaultPrice = resultSet.getFloat("default_price");
+        String currency = resultSet.getString("currency");
+        String description = resultSet.getString("description");
+        int categoryId = resultSet.getInt("category_id");
+        int supplierId = resultSet.getInt("supplier_id");
+        ProductCategoryDaoJdbc productCategoryDaoJdbc = new ProductCategoryDaoJdbc(dataSource);
+        SupplierDaoJdbc supplierDaoJdbc = new SupplierDaoJdbc(dataSource);
+        Product product = new Product(name, defaultPrice, currency, description, productCategoryDaoJdbc.find(categoryId), supplierDaoJdbc.find(supplierId));
+        product.setId(id);
+        return product;
+    }
+
 //    @Override
 //    public void add(Product product) {
 //
 //    }
 
     @Override
-    public Product find(int id) {
-        return null;
+    public Product find(int id) throws SQLException {
+        String SQL = "SELECT name, default_price, currency, description, category_id, supplier_id FROM product WHERE id = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(SQL);
+        preparedStatement.setInt(1, id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next()) {
+            Product product = getProduct(resultSet, id);
+            return product;
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -47,17 +67,8 @@ public class ProductDaoJdbc implements ProductDao {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(SQL);
             while (resultSet.next()) {
-                Integer id = resultSet.getInt("id");
-                String name = resultSet.getString("name");
-                Float defaultPrice = resultSet.getFloat("default_price");
-                String currency = resultSet.getString("currency");
-                String description = resultSet.getString("description");
-                Integer categoryId = resultSet.getInt("category_id");
-                Integer supplierId = resultSet.getInt("supplier_id");
-                ProductCategoryDaoJdbc productCategoryDaoJdbc = new ProductCategoryDaoJdbc(dataSource);
-                SupplierDaoJdbc supplierDaoJdbc = new SupplierDaoJdbc(dataSource);
-                Product product = new Product(name, defaultPrice, currency, description, productCategoryDaoJdbc.find(categoryId), supplierDaoJdbc.find(supplierId));
-                product.setId(id);
+                int id = resultSet.getInt("id");
+                Product product = getProduct(resultSet, id);
                 products.add(product);
             }
         } catch (SQLException e) {
