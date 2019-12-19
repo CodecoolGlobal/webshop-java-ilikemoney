@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
@@ -47,9 +48,9 @@ public class ProductController extends HttpServlet {
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
-        context.setVariable("categories", productCategoryDao.getAll());
-        context.setVariable("suppliers", supplierDao.getAll());
-        context.setVariable("products", productDao.getAll());
+        context.setVariable("categories", Objects.requireNonNull(productCategoryDao).getAll());
+        context.setVariable("suppliers", Objects.requireNonNull(supplierDao).getAll());
+        context.setVariable("products", Objects.requireNonNull(productDao).getAll());
         // // Alternative setting of the template context
         // Map<String, Object> params = new HashMap<>();
         // params.put("category", productCategoryDataStore.find(1));

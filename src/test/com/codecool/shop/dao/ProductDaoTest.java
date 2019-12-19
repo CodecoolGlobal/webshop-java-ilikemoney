@@ -2,14 +2,11 @@ package com.codecool.shop.dao;
 
 import com.codecool.shop.config.Initializer;
 import com.codecool.shop.dao.database.ProductDaoJdbc;
-import com.codecool.shop.dao.database.ProductDaoJdbc;
-import com.codecool.shop.model.Product;
 import com.codecool.shop.model.Product;
 import org.junit.jupiter.api.Test;
-
+import java.util.List;
 import javax.sql.DataSource;
 import java.sql.SQLException;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,12 +16,18 @@ class ProductDaoTest {
     ProductDaoTest() throws SQLException {
     }
 
-
     @Test
-    public void testValidIdReturnsProduct() throws SQLException {
+    public void testValidIdIsDataReturnsProduct() throws SQLException {
         ProductDao productDao = new ProductDaoJdbc(dataSource);
 
         assertTrue(productDao.find(1) instanceof Product);
+    }
+
+    @Test
+    public void testValidIdNoDataReturnsNull() throws SQLException {
+        ProductDao productDao = new ProductDaoJdbc(dataSource);
+
+        assertNull(productDao.find(1));
     }
 
     @Test
@@ -44,10 +47,11 @@ class ProductDaoTest {
     }
 
     @Test
-    public void testNoDataReturnsNull() throws SQLException {
+    public void testNoDataReturnsEmptyList() throws SQLException {
         ProductDao ProductDao = new ProductDaoJdbc(dataSource);
         List<Product> products = ProductDao.getAll();
 
-        assertNull(products);
+        assertEquals(0, products.size());
     }
+
 }

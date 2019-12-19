@@ -3,10 +3,8 @@ package com.codecool.shop.dao;
 import com.codecool.shop.config.Initializer;
 import com.codecool.shop.dao.database.ProductCategoryDaoJdbc;
 import com.codecool.shop.model.ProductCategory;
-
-import java.util.List;
 import org.junit.jupiter.api.Test;
-
+import java.util.List;
 import javax.sql.DataSource;
 import java.sql.SQLException;
 
@@ -19,10 +17,17 @@ class ProductCategoryDaoTest {
     }
 
     @Test
-    public void testValidIdReturnsProductCategory() throws SQLException {
+    public void testValidIdIsDataReturnsProductCategory() throws SQLException {
         ProductCategoryDao productCategoryDao = new ProductCategoryDaoJdbc(dataSource);
 
         assertTrue(productCategoryDao.find(1) instanceof ProductCategory);
+    }
+
+    @Test
+    public void testValidIdNoDataReturnsNull() throws SQLException {
+        ProductCategoryDao productCategoryDao = new ProductCategoryDaoJdbc(dataSource);
+
+        assertNull(productCategoryDao.find(1));
     }
 
     @Test
@@ -42,11 +47,11 @@ class ProductCategoryDaoTest {
     }
 
     @Test
-    public void testNoDataReturnsNull() throws SQLException {
+    public void testNoDataReturnsEmptyList() throws SQLException {
         ProductCategoryDao productCategoryDao = new ProductCategoryDaoJdbc(dataSource);
-        List<ProductCategory> categoryList = productCategoryDao.getAll();
+        List<ProductCategory> categories = productCategoryDao.getAll();
 
-        assertNull(categoryList);
+        assertEquals(0, categories.size());
     }
 
 }
