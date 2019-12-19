@@ -43,13 +43,11 @@
                 <input type="number" id="quantity" th:value="${cartItems.get(item.getKey())}">
                 <p th:text="${item.getKey().getSubTotalPrice(item.getValue())}">Price</p>
             </div>
-
         </div>
 </div>
 <div class="card">
     <div class="card-body">
         <div class="card-text">
-    <!--        #aggregates.sum(cartItems.values()) - gives back the sum of items :D-->
             <p class="lead" th:text="${totalPrice}">100 USD</p><span>HUF</span>
         </div>
         <div class="card-text">

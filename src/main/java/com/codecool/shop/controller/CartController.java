@@ -45,7 +45,11 @@ public class CartController extends HttpServlet {
         Map<Product, Integer> cartItems = new HashMap<>();
 
         for(Map.Entry<Integer, Integer> entry : shoppingCart.entrySet()) {
-            cartItems.put(productDao.find(entry.getKey()), entry.getValue());
+            try {
+                cartItems.put(productDao.find(entry.getKey()), entry.getValue());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
