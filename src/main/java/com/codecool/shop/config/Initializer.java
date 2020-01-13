@@ -38,8 +38,6 @@ public class Initializer implements ServletContextListener{
         dataSource.setUser("gergo");
         dataSource.setPassword("codecool");
 
-        dataSource.getConnection().close();
-
         return dataSource;
     }
 
