@@ -8,7 +8,6 @@ import com.codecool.shop.dao.database.ProductCategoryDaoJdbc;
 import com.codecool.shop.dao.database.ProductDaoJdbc;
 import com.codecool.shop.dao.database.SupplierDaoJdbc;
 import com.codecool.shop.config.TemplateEngineUtil;
-import org.postgresql.ds.PGSimpleDataSource;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -20,8 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 @WebServlet(urlPatterns = {"/"})
@@ -51,11 +48,6 @@ public class ProductController extends HttpServlet {
         context.setVariable("categories", Objects.requireNonNull(productCategoryDao).getAll());
         context.setVariable("suppliers", Objects.requireNonNull(supplierDao).getAll());
         context.setVariable("products", Objects.requireNonNull(productDao).getAll());
-        // // Alternative setting of the template context
-        // Map<String, Object> params = new HashMap<>();
-        // params.put("category", productCategoryDataStore.find(1));
-        // params.put("products", productDataStore.getBy(productCategoryDataStore.find(1)));
-        // context.setVariables(params);
         engine.process("product/index.html", context, resp.getWriter());
     }
 
