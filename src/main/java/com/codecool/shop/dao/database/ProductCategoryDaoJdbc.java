@@ -36,14 +36,19 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
 
     @Override
     public ProductCategory find(int id) throws SQLException {
+        if (id < 0) {
+            throw new IllegalArgumentException("id must be non negative!");
+        }
         String SQL = "SELECT name, department, description FROM category WHERE id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(SQL);
         preparedStatement.setInt(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {
             ProductCategory productCategory = getProductCategory(resultSet, id);
+            resultSet.close();
             return productCategory;
         } else {
+            resultSet.close();
             return null;
         }
     }

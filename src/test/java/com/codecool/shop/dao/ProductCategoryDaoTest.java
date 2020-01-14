@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import javax.sql.DataSource;
 import java.sql.SQLException;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -34,14 +35,14 @@ class ProductCategoryDaoTest {
     public void testInvalidIdReturnsNull() throws SQLException {
         ProductCategoryDao productCategoryDao = new ProductCategoryDaoJdbc(dataSource);
 
-        assertNull(productCategoryDao.find(-1));
+        assertThrows(IllegalArgumentException.class, () -> productCategoryDao.find(-1));
     }
 
     @Test
     public void testIsDataReturnsListOfProductCategories() throws SQLException {
         ProductCategoryDao productCategoryDao = new ProductCategoryDaoJdbc(dataSource);
         List<ProductCategory> categories = productCategoryDao.getAll();
-        boolean isProductCategory = categories.stream().allMatch(c -> c instanceof ProductCategory);
+        boolean isProductCategory = categories.stream().allMatch(Objects::nonNull);
 
         assertTrue(isProductCategory);
     }
