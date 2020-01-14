@@ -2,7 +2,6 @@ package com.codecool.shop.dao.database;
 
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.model.ProductCategory;
-import com.codecool.shop.model.Supplier;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -28,11 +27,6 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
         productCategory.setId(id);
         return productCategory;
     }
-
-//    @Override
-//    public void add(ProductCategory category) {
-//
-//    }
 
     @Override
     public ProductCategory find(int id) throws SQLException {
