@@ -4,6 +4,8 @@ import com.codecool.shop.config.Initializer;
 import com.codecool.shop.dao.database.ProductDaoJdbc;
 import com.codecool.shop.model.Product;
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
 import java.util.List;
 import javax.sql.DataSource;
 import java.sql.SQLException;
@@ -13,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ProductDaoTest {
     DataSource dataSource = Initializer.connect();
 
-    ProductDaoTest() throws SQLException {
+    ProductDaoTest() throws SQLException, IOException {
     }
 
     @Test

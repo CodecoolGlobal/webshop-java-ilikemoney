@@ -29,7 +29,7 @@ public class CartController extends HttpServlet {
 
     DataSource dataSource = Initializer.connect();
 
-    public CartController() throws SQLException {
+    public CartController() throws SQLException, IOException {
     }
 
     @Override
