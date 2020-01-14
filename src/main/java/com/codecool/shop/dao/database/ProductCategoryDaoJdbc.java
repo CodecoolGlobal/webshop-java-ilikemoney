@@ -45,10 +45,8 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
         ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {
             ProductCategory productCategory = getProductCategory(resultSet, id);
-            resultSet.close();
             return productCategory;
         } else {
-            resultSet.close();
             return null;
         }
     }

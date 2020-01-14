@@ -21,18 +21,11 @@ class ProductCategoryDaoTest {
     public void testValidIdIsDataReturnsProductCategory() throws SQLException {
         ProductCategoryDao productCategoryDao = new ProductCategoryDaoJdbc(dataSource);
 
-        assertTrue(productCategoryDao.find(1) instanceof ProductCategory);
+        assertNotNull(productCategoryDao.find(1));
     }
 
     @Test
-    public void testValidIdNoDataReturnsNull() throws SQLException {
-        ProductCategoryDao productCategoryDao = new ProductCategoryDaoJdbc(dataSource);
-
-        assertNull(productCategoryDao.find(1));
-    }
-
-    @Test
-    public void testInvalidIdReturnsNull() throws SQLException {
+    public void testInvalidIdThrowsExeption() throws SQLException {
         ProductCategoryDao productCategoryDao = new ProductCategoryDaoJdbc(dataSource);
 
         assertThrows(IllegalArgumentException.class, () -> productCategoryDao.find(-1));

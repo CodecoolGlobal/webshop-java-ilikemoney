@@ -27,7 +27,7 @@ public class CartController extends HttpServlet {
 
     DataSource dataSource = Initializer.connect();
 
-    public CartController() throws SQLException {
+    public CartController() throws SQLException, IOException {
     }
 
     @Override
@@ -44,6 +44,7 @@ public class CartController extends HttpServlet {
 
         for(Map.Entry<Integer, Integer> entry : shoppingCart.entrySet()) {
             try {
+                assert productDao != null;
                 cartItems.put(productDao.find(entry.getKey()), entry.getValue());
             } catch (SQLException e) {
                 e.printStackTrace();
