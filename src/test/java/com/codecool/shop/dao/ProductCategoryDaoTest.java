@@ -5,15 +5,16 @@ import com.codecool.shop.dao.database.ProductCategoryDaoJdbc;
 import com.codecool.shop.model.ProductCategory;
 import org.junit.jupiter.api.Test;
 
-import javax.sql.DataSource;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
+import javax.sql.DataSource;
+import java.sql.SQLException;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProductCategoryDaoTest {
-    DataSource dataSource = Initializer.connect();
+    DataSource dataSource = Initializer.connect("connect.properties");
 
     ProductCategoryDaoTest() throws SQLException, IOException {
     }

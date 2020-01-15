@@ -24,13 +24,13 @@ import java.util.Objects;
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
 
-    DataSource dataSource = Initializer.connect();
+    DataSource dataSource = Initializer.connect("connect.properties");
 
-    public ProductController() throws SQLException, IOException {
+    public ProductController() throws IOException {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         ProductCategoryDao productCategoryDao = null;
         ProductDao productDao = null;
@@ -48,6 +48,11 @@ public class ProductController extends HttpServlet {
         context.setVariable("categories", Objects.requireNonNull(productCategoryDao).getAll());
         context.setVariable("suppliers", Objects.requireNonNull(supplierDao).getAll());
         context.setVariable("products", Objects.requireNonNull(productDao).getAll());
+        // // Alternative setting of the template context
+        // Map<String, Object> params = new HashMap<>();
+        // params.put("category", productCategoryDataStore.find(1));
+        // params.put("products", productDataStore.getBy(productCategoryDataStore.find(1)));
+        // context.setVariables(params);
         engine.process("product/index.html", context, resp.getWriter());
     }
 

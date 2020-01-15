@@ -19,19 +19,21 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @WebServlet(urlPatterns = {"/cart"})
 public class CartController extends HttpServlet {
 
-    DataSource dataSource = Initializer.connect();
+    DataSource dataSource = Initializer.connect("connect.properties");
 
-    public CartController() throws SQLException, IOException {
+    public CartController() throws IOException {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         ProductDao productDao = null;
         try {
             productDao = new ProductDaoJdbc(dataSource);

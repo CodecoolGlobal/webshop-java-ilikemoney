@@ -35,11 +35,6 @@ public class ProductDaoJdbc implements ProductDao {
         return product;
     }
 
-//    @Override
-//    public void add(Product product) {
-//
-//    }
-
     @Override
     public Product find(int id) throws SQLException {
         if (id < 0) {
