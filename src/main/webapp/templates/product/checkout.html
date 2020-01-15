@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="author" content="Codecool" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <title>Checkout</title>
+
+    <!-- Bootstrap components -->
+    <!-- Latest compiled and minified Jquery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <!--Latest compiled and minified Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- End of Bootstrap components -->
+
+    <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+
+    <script type="module" src="static/js/main.js"></script>
+</head>
+
+<body>
+
+<div class="jumbotron">
+    <a href="/"><h1>Magic Shop</h1></a>
+</div>
+
+<div class="container">
+    <div class="user-data">
+        <div class="full-name">
+            <div>
+                <label for="full-name">Full Name:</label>
+                <input required type="text" id="full-name">
+            </div>
+        </div>
+        <div class="email-address">
+            <div>
+                <label for="email-address">Email Address:</label>
+                <input required type="email" id="email-address">
+            </div>
+        </div>
+        <div class="phone-number">
+            <div>
+                <label for="phone-number">Phone Number:</label>
+                <input required type="number" id="phone-number">
+            </div>
+        </div>
+        <div class="billing-address">
+            <h5>Billing Address:</h5>
+            <div>
+                <div class="country-billing">
+                    <label for="country-billing">Country:</label>
+                    <input required type="text" id="country-billing">
+                </div>
+                <div class="city-billing">
+                    <label for="city-billing">City:</label>
+                    <input required type="text" id="city-billing">
+                </div>
+                <div class="zipcode-billing">
+                    <label for="zipcode-billing">Zipcode:</label>
+                    <input required type="number" id="zipcode-billing">
+                </div>
+                <div class="address-billing">
+                    <label for="address-billing">Address:</label>
+                    <input required id="address-billing">
+                </div>
+            </div>
+        </div>
+        <div class="shipping-address">
+            <h5>Shipping Address:</h5>
+            <div class="same-address-check">
+                <input type="checkbox" id="same-address">
+                <label for="same-address">Same as the billing address</label>
+            </div>
+            <div>
+                <div class="country-shipping">
+                    <label for="country-shipping">Country:</label>
+                    <input required type="text" id="country-shipping">
+                </div>
+                <div class="city-shipping">
+                    <label for="city-shipping">City:</label>
+                    <input required type="text" id="city-shipping">
+                </div>
+                <div class="zipcode-shipping">
+                    <label for="zipcode-shipping">Zipcode:</label>
+                    <input required type="number" id="zipcode-shipping">
+                </div>
+                <div class="address-shipping">
+                    <label for="address-shipping">Address:</label>
+                    <input required id="address-shipping">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="payment-btn">
+        <a class="btn btn-success" href="/payment">Checkout</a>
+    </div>
+</div>
+
+<div th:replace="footer.html :: copy"></div>
+
+</body>
+</html>

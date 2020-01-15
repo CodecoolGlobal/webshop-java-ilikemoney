@@ -2,7 +2,6 @@ package com.codecool.shop.dao.database;
 
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.model.ProductCategory;
-import com.codecool.shop.model.Supplier;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -29,21 +28,21 @@ public class ProductCategoryDaoJdbc implements ProductCategoryDao {
         return productCategory;
     }
 
-//    @Override
-//    public void add(ProductCategory category) {
-//
-//    }
-
     @Override
     public ProductCategory find(int id) throws SQLException {
+        if (id < 0) {
+            throw new IllegalArgumentException("id must be non negative!");
+        }
         String SQL = "SELECT name, department, description FROM category WHERE id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(SQL);
         preparedStatement.setInt(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {
             ProductCategory productCategory = getProductCategory(resultSet, id);
+            resultSet.close();
             return productCategory;
         } else {
+            resultSet.close();
             return null;
         }
     }

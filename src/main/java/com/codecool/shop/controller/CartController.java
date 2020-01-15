@@ -46,6 +46,7 @@ public class CartController extends HttpServlet {
 
         for(Map.Entry<Integer, Integer> entry : shoppingCart.entrySet()) {
             try {
+                assert productDao != null;
                 cartItems.put(productDao.find(entry.getKey()), entry.getValue());
             } catch (SQLException e) {
                 e.printStackTrace();

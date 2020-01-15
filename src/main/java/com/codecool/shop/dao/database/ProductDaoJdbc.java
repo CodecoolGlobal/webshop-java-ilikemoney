@@ -35,11 +35,6 @@ public class ProductDaoJdbc implements ProductDao {
         return product;
     }
 
-//    @Override
-//    public void add(Product product) {
-//
-//    }
-
     @Override
     public Product find(int id) throws SQLException {
         String SQL = "SELECT name, default_price, currency, description, category_id, supplier_id FROM product WHERE id = ?";
