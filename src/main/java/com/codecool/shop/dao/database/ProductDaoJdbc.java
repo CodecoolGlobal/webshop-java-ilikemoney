@@ -42,6 +42,9 @@ public class ProductDaoJdbc implements ProductDao {
 
     @Override
     public Product find(int id) throws SQLException {
+        if (id < 0) {
+            throw new IllegalArgumentException("id must be non negative!");
+        }
         String SQL = "SELECT name, default_price, currency, description, category_id, supplier_id FROM product WHERE id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(SQL);
         preparedStatement.setInt(1, id);

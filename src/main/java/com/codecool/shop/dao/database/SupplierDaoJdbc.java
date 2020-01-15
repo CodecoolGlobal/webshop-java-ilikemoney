@@ -35,6 +35,9 @@ public class SupplierDaoJdbc implements SupplierDao {
 
     @Override
     public Supplier find(int id) throws SQLException {
+        if (id < 0) {
+            throw new IllegalArgumentException("id must be non negative!");
+        }
         String SQL = "SELECT name, description FROM supplier WHERE id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(SQL);
         preparedStatement.setInt(1, id);
