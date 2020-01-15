@@ -5,25 +5,40 @@ import com.codecool.shop.dao.database.ProductCategoryDaoJdbc;
 import com.codecool.shop.model.ProductCategory;
 import org.junit.jupiter.api.Test;
 
-import javax.sql.DataSource;
-
-import java.sql.SQLException;
 import java.util.List;
+import javax.sql.DataSource;
+import java.sql.SQLException;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ProductCategoryDaoDBTest {
+class ProductCategoryDaoTest {
     DataSource dataSource = Initializer.connect();
 
-
-    ProductCategoryDaoDBTest() throws SQLException {
+    ProductCategoryDaoTest() throws SQLException {
     }
 
     @Test
-    public void testValidIdNoDataReturnsNull() throws SQLException {
+    public void testValidIdIsDataReturnsProductCategory() throws SQLException {
         ProductCategoryDao productCategoryDao = new ProductCategoryDaoJdbc(dataSource);
 
-        assertNull(productCategoryDao.find(1));
+        assertNotNull(productCategoryDao.find(1));
+    }
+
+    @Test
+    public void testInvalidIdThrowsExeption() throws SQLException {
+        ProductCategoryDao productCategoryDao = new ProductCategoryDaoJdbc(dataSource);
+
+        assertThrows(IllegalArgumentException.class, () -> productCategoryDao.find(-1));
+    }
+
+    @Test
+    public void testIsDataReturnsListOfProductCategories() throws SQLException {
+        ProductCategoryDao productCategoryDao = new ProductCategoryDaoJdbc(dataSource);
+        List<ProductCategory> categories = productCategoryDao.getAll();
+        boolean isProductCategory = categories.stream().allMatch(Objects::nonNull);
+
+        assertTrue(isProductCategory);
     }
 
     @Test
@@ -33,4 +48,5 @@ class ProductCategoryDaoDBTest {
 
         assertEquals(0, categories.size());
     }
+
 }

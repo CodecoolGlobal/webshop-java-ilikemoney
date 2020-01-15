@@ -4,16 +4,19 @@ import com.codecool.shop.config.Initializer;
 import com.codecool.shop.dao.database.SupplierDaoJdbc;
 import com.codecool.shop.model.Supplier;
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
 import java.util.List;
 import javax.sql.DataSource;
 import java.sql.SQLException;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class SupplierDaoTest {
     DataSource dataSource = Initializer.connect();
 
-    SupplierDaoTest() throws SQLException {
+    SupplierDaoTest() throws SQLException, IOException {
     }
 
     @Test
