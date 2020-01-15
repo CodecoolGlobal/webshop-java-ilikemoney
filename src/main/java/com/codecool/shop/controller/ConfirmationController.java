@@ -17,6 +17,8 @@ import java.io.IOException;
 @WebServlet(urlPatterns = {"/confirmation"})
 public class ConfirmationController extends HttpServlet {
 
+    public ConfirmationController() throws ServletException, IOException{}
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ShoppingCartDao shoppingCartDao = ShoppingCartDaoMem.getInstance();

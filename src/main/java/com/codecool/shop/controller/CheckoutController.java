@@ -6,6 +6,7 @@ import com.codecool.shop.dao.implementation.ShoppingCartDaoMem;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
+import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,6 +16,9 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = {"/checkout"})
 public class CheckoutController extends HttpServlet {
+
+    public CheckoutController() throws ServletException, IOException{
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
