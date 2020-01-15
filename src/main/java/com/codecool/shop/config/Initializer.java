@@ -26,18 +26,17 @@ public class Initializer implements ServletContextListener{
 
     }
 
-    public static DataSource connect() throws SQLException, IOException {
+    public static DataSource connect(String filename) throws IOException {
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
 
         Properties prop = new Properties();
-        String propFileName = "connect.properties";
 
-        inputStream = Initializer.class.getClassLoader().getResourceAsStream(propFileName);
+        inputStream = Initializer.class.getClassLoader().getResourceAsStream(filename);
 
         if (inputStream != null) {
             prop.load(inputStream);
         } else {
-            throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
+            throw new FileNotFoundException("property file '" + filename + "' not found in the classpath");
         }
 
         dataSource.setDatabaseName(prop.getProperty("databasename"));

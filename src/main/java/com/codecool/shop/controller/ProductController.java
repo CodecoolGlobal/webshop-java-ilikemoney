@@ -24,13 +24,13 @@ import java.util.Objects;
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
 
-    DataSource dataSource = Initializer.connect();
+    DataSource dataSource = Initializer.connect("connect.properties");
 
-    public ProductController() throws SQLException, IOException {
+    public ProductController() throws IOException {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         ProductCategoryDao productCategoryDao = null;
         ProductDao productDao = null;
