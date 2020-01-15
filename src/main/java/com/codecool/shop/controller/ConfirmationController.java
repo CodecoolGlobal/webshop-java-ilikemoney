@@ -1,5 +1,6 @@
 package com.codecool.shop.controller;
 
+
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.ShoppingCartDao;
 import com.codecool.shop.dao.implementation.ShoppingCartDaoMem;
@@ -13,19 +14,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = {"/checkout"})
-public class CheckoutController extends HttpServlet {
+@WebServlet(urlPatterns = {"/confirmation"})
+public class ConfirmationController extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ShoppingCartDao shoppingCartDao = ShoppingCartDaoMem.getInstance();
-        if(shoppingCartDao.getAll().isEmpty()) {
-            resp.sendRedirect("/");
-        }
+        shoppingCartDao.getAll().clear();
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
-        engine.process("/product/checkout.html", context, resp.getWriter());
+        engine.process("/product/confirmation.html", context, resp.getWriter());
     }
 
 }
