@@ -27,18 +27,26 @@ class SupplierDaoTest {
     }
 
     @Test
-    public void testInvalidIdReturnsNull() throws SQLException {
+    public void testInvalidIdThrowsExeption() throws SQLException {
         SupplierDao supplierDao = new SupplierDaoJdbc(dataSource);
 
-        assertNull(supplierDao.find(-1));
+        assertThrows(IllegalArgumentException.class, () -> supplierDao.find(-1));
     }
 
     @Test
     public void testIsDataReturnsListOfSuppliers() throws SQLException {
-        SupplierDao SupplierDao = new SupplierDaoJdbc(dataSource);
-        List<Supplier> suppliers = SupplierDao.getAll();
-        boolean isSupplier = suppliers.stream().allMatch(Objects::nonNull);
+        SupplierDao supplierDao = new SupplierDaoJdbc(dataSource);
+        List<Supplier> suppliers = supplierDao.getAll();
 
-        assertTrue(isSupplier);
+        assertNotNull(suppliers);
     }
+
+    @Test
+    public void testNoDataReturnsEmptyList() throws SQLException {
+        SupplierDao supplierDao = new SupplierDaoJdbc(dataSource);
+        List<Supplier> suppliers = supplierDao.getAll();
+
+        assertEquals(0, suppliers.size());
+    }
+
 }
