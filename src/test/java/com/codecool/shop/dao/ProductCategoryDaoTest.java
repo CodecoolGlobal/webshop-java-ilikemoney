@@ -5,11 +5,10 @@ import com.codecool.shop.dao.database.ProductCategoryDaoJdbc;
 import com.codecool.shop.model.ProductCategory;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-import java.util.List;
 import javax.sql.DataSource;
+import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Objects;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -37,9 +36,8 @@ class ProductCategoryDaoTest {
     public void testIsDataReturnsListOfProductCategories() throws SQLException {
         ProductCategoryDao productCategoryDao = new ProductCategoryDaoJdbc(dataSource);
         List<ProductCategory> categories = productCategoryDao.getAll();
-        boolean isProductCategory = categories.stream().allMatch(Objects::nonNull);
 
-        assertTrue(isProductCategory);
+        assertNotNull(categories);
     }
 
     @Test
