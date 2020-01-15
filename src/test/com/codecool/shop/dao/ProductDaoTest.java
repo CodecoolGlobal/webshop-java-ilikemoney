@@ -5,10 +5,11 @@ import com.codecool.shop.dao.database.ProductDaoJdbc;
 import com.codecool.shop.model.Product;
 import org.junit.jupiter.api.Test;
 
-import javax.sql.DataSource;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
+import javax.sql.DataSource;
+import java.sql.SQLException;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
