@@ -1,6 +1,8 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
+import com.codecool.shop.dao.ShoppingCartDao;
+import com.codecool.shop.dao.implementation.ShoppingCartDaoMem;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -16,6 +18,11 @@ public class CheckoutController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+        ShoppingCartDao shoppingCartDao = ShoppingCartDaoMem.getInstance();
+        System.out.println(shoppingCartDao.getAll());
+        if(shoppingCartDao.getAll().isEmpty()) {
+            resp.sendRedirect("/");
+        }
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
