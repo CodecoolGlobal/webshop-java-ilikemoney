@@ -41,12 +41,4 @@ class ProductCategoryDaoTest {
         assertNotNull(categories);
     }
 
-    @Test
-    public void testNoDataReturnsEmptyList() throws SQLException {
-        ProductCategoryDao productCategoryDao = new ProductCategoryDaoJdbc(dataSource);
-        List<ProductCategory> categories = productCategoryDao.getAll();
-
-        assertEquals(0, categories.size());
-    }
-
 }

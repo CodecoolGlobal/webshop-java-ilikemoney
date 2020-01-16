@@ -40,12 +40,4 @@ class SupplierDaoTest {
         assertNotNull(suppliers);
     }
 
-    @Test
-    public void testNoDataReturnsEmptyList() throws SQLException {
-        SupplierDao supplierDao = new SupplierDaoJdbc(dataSource);
-        List<Supplier> suppliers = supplierDao.getAll();
-
-        assertEquals(0, suppliers.size());
-    }
-
 }
