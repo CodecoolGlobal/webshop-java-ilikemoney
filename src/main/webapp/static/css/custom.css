@@ -1,3 +1,7 @@
+#quantity {
+    width: 55px;
+}
+
 a:link {
     text-decoration: none;
 }
@@ -144,4 +148,16 @@ body {
     display: flex;
     padding-bottom: 1em;
     margin: 1em;
+}
+
+#zipcode-billing{
+    width: 70px;
+}
+
+#zipcode-shipping{
+    width: 70px;
+}
+
+#code{
+    width: 60px;
 }

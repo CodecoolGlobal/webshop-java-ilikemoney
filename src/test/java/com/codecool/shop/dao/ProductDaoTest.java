@@ -40,12 +40,4 @@ class ProductDaoTest {
         assertNotNull(products);
     }
 
-    @Test
-    public void testNoDataReturnsEmptyList() throws SQLException {
-        ProductDao productDao = new ProductDaoJdbc(dataSource);
-        List<Product> products = productDao.getAll();
-
-        assertEquals(0, products.size());
-    }
-
 }
