@@ -14,14 +14,16 @@ public class ProductDaoJdbc implements ProductDao {
 
     private DataSource dataSource;
 
-    Connection connection;
+//    Connection connection;
 
     public ProductDaoJdbc(DataSource dataSource) throws SQLException {
         this.dataSource = dataSource;
-        this.connection = dataSource.getConnection();
+//        this.connection = dataSource.getConnection();
     }
 
     private Product getProduct(ResultSet resultSet, int id) throws SQLException {
+        Connection connection = dataSource.getConnection();
+
         String name = resultSet.getString("name");
         float defaultPrice = resultSet.getFloat("default_price");
         String currency = resultSet.getString("currency");
@@ -32,11 +34,16 @@ public class ProductDaoJdbc implements ProductDao {
         SupplierDaoJdbc supplierDaoJdbc = new SupplierDaoJdbc(dataSource);
         Product product = new Product(name, defaultPrice, currency, description, productCategoryDaoJdbc.find(categoryId), supplierDaoJdbc.find(supplierId));
         product.setId(id);
+
+        connection.close();
+
         return product;
     }
 
     @Override
     public Product find(int id) throws SQLException {
+        Connection connection = dataSource.getConnection();
+
         if (id < 0) {
             throw new IllegalArgumentException("id must be non negative!");
         }
@@ -44,6 +51,9 @@ public class ProductDaoJdbc implements ProductDao {
         PreparedStatement preparedStatement = connection.prepareStatement(SQL);
         preparedStatement.setInt(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
+
+        connection.close();
+
         if (resultSet.next()) {
             Product product = getProduct(resultSet, id);
             return product;
@@ -58,7 +68,9 @@ public class ProductDaoJdbc implements ProductDao {
     }
 
     @Override
-    public List<Product> getAll() {
+    public List<Product> getAll() throws SQLException {
+        Connection connection = dataSource.getConnection();
+
         List<Product> products = new ArrayList<>();
         String SQL = "SELECT id, name, default_price, currency, description, category_id, supplier_id FROM product";
         try {
@@ -71,6 +83,8 @@ public class ProductDaoJdbc implements ProductDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            connection.close();
         }
         return products;
     }

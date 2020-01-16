@@ -30,7 +30,7 @@ public class ProductController extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         ProductCategoryDao productCategoryDao = null;
         ProductDao productDao = null;
@@ -45,9 +45,21 @@ public class ProductController extends HttpServlet {
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
-        context.setVariable("categories", Objects.requireNonNull(productCategoryDao).getAll());
-        context.setVariable("suppliers", Objects.requireNonNull(supplierDao).getAll());
-        context.setVariable("products", Objects.requireNonNull(productDao).getAll());
+        try {
+            context.setVariable("categories", Objects.requireNonNull(productCategoryDao).getAll());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            context.setVariable("suppliers", Objects.requireNonNull(supplierDao).getAll());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            context.setVariable("products", Objects.requireNonNull(productDao).getAll());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         // // Alternative setting of the template context
         // Map<String, Object> params = new HashMap<>();
         // params.put("category", productCategoryDataStore.find(1));

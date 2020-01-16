@@ -12,23 +12,30 @@ public class SupplierDaoJdbc implements SupplierDao {
 
     private DataSource dataSource;
 
-    Connection connection;
+//    Connection connection;
 
     public SupplierDaoJdbc(DataSource dataSource) throws SQLException {
         this.dataSource = dataSource;
-        this.connection = dataSource.getConnection();
+//        this.connection = dataSource.getConnection();
     }
 
     private Supplier getSupplier(ResultSet resultSet, int id) throws SQLException {
+        Connection connection = dataSource.getConnection();
+
         String name = resultSet.getString("name");
         String description = resultSet.getString("description");
         Supplier supplier = new Supplier(name, description);
         supplier.setId(id);
+
+        connection.close();
+
         return supplier;
     }
 
     @Override
     public Supplier find(int id) throws SQLException {
+        Connection connection = dataSource.getConnection();
+
         if (id < 0) {
             throw new IllegalArgumentException("id must be non negative!");
         }
@@ -36,6 +43,9 @@ public class SupplierDaoJdbc implements SupplierDao {
         PreparedStatement preparedStatement = connection.prepareStatement(SQL);
         preparedStatement.setInt(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
+
+        connection.close();
+
         if (resultSet.next()) {
             Supplier supplier = getSupplier(resultSet, id);
             return supplier;
@@ -50,7 +60,9 @@ public class SupplierDaoJdbc implements SupplierDao {
     }
 
     @Override
-    public List<Supplier> getAll() {
+    public List<Supplier> getAll() throws SQLException {
+        Connection connection = dataSource.getConnection();
+
         List<Supplier> suppliers = new ArrayList<>();
         String SQL = "SELECT id, name, description FROM supplier";
         try {
@@ -63,6 +75,8 @@ public class SupplierDaoJdbc implements SupplierDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            connection.close();
         }
         return suppliers;
     }
