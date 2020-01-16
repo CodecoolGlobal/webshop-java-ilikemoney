@@ -35,15 +35,20 @@
     <a href="/"><h1>Magic Shop</h1></a>
 </div>
 
-<div id="products" th:each="item,iterStat : ${cartItems}">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title" th:text="${item.getKey().getName()}">Product name</h4>
-                <label for="quantity">Quantity:</label>
-                <input type="number" id="quantity" th:value="${cartItems.get(item.getKey())}">
-                <p th:text="${item.getKey().getSubTotalPrice(item.getValue())}">Price</p>
+<div id="products" th:each="item,iterStat : ${cartItems}" class="row">
+    <div class="col col-sm-12 col-md-6 col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <img class="" style="width: 200px; height: 120px"
+                         th:attr="src='/static/img/product_' + ${item.getKey().getId()} + '.jpg'" alt=""/>
+                    <h4 class="card-title" th:text="${item.getKey().getName()}">Product name</h4>
+                    <label for="quantity">Quantity:</label>
+                    <input type="number" id="quantity" th:value="${cartItems.get(item.getKey())}">
+                    <p th:text="${item.getKey().getSubTotalPrice(item.getValue())}">Price</p>
+                </div>
             </div>
-        </div>
+    </div>
+
 </div>
 <div class="card">
     <div class="card-body">
