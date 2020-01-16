@@ -35,8 +35,8 @@
     <a href="/"><h1>Magic Shop</h1></a>
 </div>
 
-<div id="products" th:each="item,iterStat : ${cartItems}" class="row">
-    <div class="col col-sm-12 col-md-6 col-lg-4">
+<div id="cart-items" class="row">
+    <div class="col col-sm-12 col-md-6 col-lg-4" th:each="item,iterStat : ${cartItems}">
             <div class="card">
                 <div class="card-body">
                     <img class="" style="width: 200px; height: 120px"
